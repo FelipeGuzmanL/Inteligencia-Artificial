@@ -5,14 +5,14 @@ import pandas as pd
 import os
 
 
-#os.chdir("../output")
-df = pd.read_csv("steam_1000_muestras_kflod.csv",sep = ";")
+os.chdir("../output")
+df = pd.read_csv("steam_1000_muestras_normalizado.csv",sep = ";")
 
 def sigmoide(x):
     return 1/(1 + np.exp(-x))
 def red_neuronal(entrenamiento):
     valores = entrenamiento.drop("gusta o no gusta", axis = 1) #Se elimina la clase
-    objetivo = entrenamiento["gusta o no gusta"] #Obejtivo solo la clase 
+    objetivo = entrenamiento["gusta o no gusta"] #Objetivo solo la clase 
     #Hyperparametros
     capa_escondida = 2 #Numero de unidades en la capa escondida
     epochs = 1000 #Numero de iteraciones sobre el conjunto de entrenamiento
@@ -51,24 +51,6 @@ def red_neuronal(entrenamiento):
         print("Error: ",escondida_error)
         
     #es lo que pude realizar, pero tengo muchos errores con el manejo de datos de los dataframe
-            
-"""    #Actualiza los parámetros (pesos)
-    entrada_escondida += taza_aprendizaje * gradiente_entrada_escondida / m
-    salida_escondida += taza_aprendizaje * gradiente__salida_escondida / m
-    
-    if e % (epochs / 10) == 0:
-        z = sigmoide(np.dot(valores.values, entrada_escondida))
-        w = sigmoide(np.dot(z, salida_escondida))
-        
-        #Función de costo
-        costo = np.mean((w - objetivo)**2)
-        
-        if ult_costo and ult_costo < costo:
-             print("Costo de entrenamiento: ",costo)
-        else:
-            print("Costo de entrenamiento: ",costo)
-            
-        ult_costo = costo"""
 
 folds = np.array_split(df.sample(frac=1), 5)
 
